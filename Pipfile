@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 pydocstyle = "*"
 black = "==19.3b0"
+pre-commit = "*"
 
 [packages]
 requests = "*"
