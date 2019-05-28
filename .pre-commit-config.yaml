@@ -1,0 +1,11 @@
+repos:
+  - repo: https://github.com/python/black
+    rev: stable
+    hooks:
+    - id: black
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: 6de6d938377e2db3bfe6f706fa2e3b90c412db76
+    hooks:
+    - id: pydocstyle
+default_language_version:
+  python: python3
