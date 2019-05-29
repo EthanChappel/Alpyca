@@ -10,7 +10,7 @@ import requests
 DEFAULT_API_VERSION = 1
 
 
-class Equipment:
+class Device:
     """Common methods across all ASCOM Alpaca devices.
 
     Attributes:
@@ -26,7 +26,7 @@ class Equipment:
     """
 
     def __init__(self, address, device_type, device_number, protocall, api_version):
-        """Initialize Equipment object."""
+        """Initialize Device object."""
         self.address = address
         self.device_type = device_type
         self.device_number = device_number
