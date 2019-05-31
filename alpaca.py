@@ -102,7 +102,7 @@ class Device:
         
         """
         if connected == None:
-            return bool(requests.get("%s/connected" % self.base_url).json()["Value"])
+            return self._get("connected")
         else:
             return requests.put(
                 "%s/connected" % self.base_url, data={"Connected": connected}
@@ -110,32 +110,27 @@ class Device:
 
     def description(self):
         """Get description of the device."""
-        return requests.get("%s/description" % self.base_url).json()["Value"]
+        return self._get("name")
 
     def driverinfo(self):
         """Get information of the device."""
-        return [
-            i.strip()
-            for i in requests.get("%s/driverinfo" % self.base_url)
-            .json()["Value"]
-            .split(",")
-        ]
+        return [i.strip() for i in self._get("driverinfo").split(",")]
 
     def driverversion(self):
         """Get string containing only the major and minor version of the driver."""
-        return requests.get("%s/driverversion" % self.base_url).json()["Value"]
+        return self._get("driverversion")
 
     def interfaceversion(self):
         """ASCOM Device interface version number that this device supports."""
-        return int(requests.get("%s/interfaceversion" % self.base_url).json()["Value"])
+        return self._get("interfaceversion")
 
     def name(self):
         """Get name of the device."""
-        return requests.get("%s/name" % self.base_url).json()["Value"]
+        return self._get("name")
 
     def supportedactions(self):
         """Get list of action names supported by this driver."""
-        return requests.get("%s/supportedactions" % self.base_url).json()["Value"]
+        return self._get("supportedactions")
 
     def _get(self, attribute):
         """Send an HTTP GET request to an Alpaca server and check response for errors.
