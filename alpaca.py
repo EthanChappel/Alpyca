@@ -138,7 +138,7 @@ class Device:
         return requests.get("%s/supportedactions" % self.base_url).json()["Value"]
 
     def _get(self, attribute):
-        """Get a response from an Alpaca server and check for errors.
+        """Send an HTTP GET request to an Alpaca server and check response for errors.
 
         Args:
             attribute (str): Attribute to get from server.
