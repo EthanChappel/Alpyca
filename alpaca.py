@@ -136,3 +136,22 @@ class Device:
     def supportedactions(self):
         """Get list of action names supported by this driver."""
         return requests.get("%s/supportedactions" % self.base_url).json()["Value"]
+
+    def _get(self, attribute):
+        """Get a response from an Alpaca server and check for errors.
+
+        Args:
+            attribute (str): Attribute to get from server.
+        
+        """
+        response = requests.get("%s/%s" % (self.base_url, attribute))
+
+        if response.json()["ErrorNumber"] != 0:
+            raise Exception(
+                "Error %d: %s"
+                % (response.json()["ErrorNumber"], response.json()["ErrorMessage"])
+            )
+        elif response.status_code == 400 or response.status_code == 500:
+            raise Exception(response.json()["Value"])
+
+        return response
