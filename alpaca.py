@@ -47,9 +47,7 @@ class Device:
             *args: List of required parameters or empty if none are required.
 
         """
-        return requests.put(
-            "%s/action" % self.base_url, data={"Action": action, "Parameters": args}
-        )
+        return self._put("action", {"Action": action, "Parameters": args})["Value"]
 
     def commandblind(self, command, raw):
         """Transmit an arbitrary string to the device and does not wait for a response.
@@ -60,9 +58,7 @@ class Device:
                 If false, then protocol framing characters may be added prior to transmission.
 
         """
-        return requests.put(
-            "%s/commandblind" % self.base_url, data={"Command": command, "Raw": raw}
-        )
+        return self._put("commandblind", {"Command": command, "Raw": raw})["Value"]
 
     def commandbool(self, command, raw):
         """Transmit an arbitrary string to the device and wait for a boolean response.
@@ -73,11 +69,7 @@ class Device:
                 If false, then protocol framing characters may be added prior to transmission.
 
         """
-        return bool(
-            requests.put(
-                "%s/commandbool" % self.base_url, data={"Command": command, "Raw": raw}
-            )
-        )
+        return self._put("commandbool", {"Command": command, "Raw": raw})["Value"]
 
     def commandstring(self, command, raw):
         """Transmit an arbitrary string to the device and wait for a string response.
@@ -88,9 +80,7 @@ class Device:
                 If false, then protocol framing characters may be added prior to transmission.
 
         """
-        return requests.put(
-            "%s/commandstring" % self.base_url, data={"Command": command, "Raw": raw}
-        )
+        return self._put("commandstring", {"Command": command, "Raw": raw})["Value"]
 
     def connected(self, connected=None):
         """Retrieve or set the connected state of the device.
@@ -104,9 +94,7 @@ class Device:
         if connected == None:
             return self._get("connected")
         else:
-            return requests.put(
-                "%s/connected" % self.base_url, data={"Connected": connected}
-            )
+            self._put("connected", {"Connected": connected})
 
     def description(self):
         """Get description of the device."""
