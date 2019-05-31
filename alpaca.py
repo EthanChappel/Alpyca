@@ -144,6 +144,12 @@ class Device:
         return response.json()
 
     def __check_error(self, response):
+        """Check response from Alpaca server for Errors.
+
+        Args:
+            response (Response): Response from Alpaca server to check.
+
+        """
         if response.json()["ErrorNumber"] != 0:
             raise Exception(
                 "Error %d: %s"
