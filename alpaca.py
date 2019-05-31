@@ -140,7 +140,10 @@ class Device:
         
         """
         response = requests.get("%s/%s" % (self.base_url, attribute))
+        self.__check_error(response)
+        return response.json()["Value"]
 
+    def __check_error(self, response):
         if response.json()["ErrorNumber"] != 0:
             raise Exception(
                 "Error %d: %s"
@@ -148,5 +151,3 @@ class Device:
             )
         elif response.status_code == 400 or response.status_code == 500:
             raise Exception(response.json()["Value"])
-
-        return response
