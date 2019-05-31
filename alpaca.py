@@ -120,14 +120,14 @@ class Device:
         """Get list of action names supported by this driver."""
         return self._get("supportedactions")
 
-    def _get(self, attribute):
+    def _get(self, attribute, data={}):
         """Send an HTTP GET request to an Alpaca server and check response for errors.
 
         Args:
             attribute (str): Attribute to get from server.
         
         """
-        response = requests.get("%s/%s" % (self.base_url, attribute))
+        response = requests.get("%s/%s" % (self.base_url, attribute), data=data)
         self.__check_error(response)
         return response.json()["Value"]
 
