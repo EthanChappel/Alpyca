@@ -14,7 +14,7 @@ class DateTime:
         hour (int): Number of hours.
         minute (int): Number of minutes.
         second (int): Number of seconds.
-        microseconds (int): Number of microseconds.
+        microsecond (int): Number of microseconds.
     
     """
 
@@ -35,7 +35,7 @@ class DateTime:
         self.hour = int(match.group(4))
         self.minute = int(match.group(5))
         self.second = int(match.group(6))
-        self.microseconds = int(match.group(7))
+        self.microsecond = int(match.group(7))
 
     def datetime(self):
         """Get a standard library datetime object from this DateTime object."""
@@ -55,5 +55,5 @@ class DateTime:
             self.hour,
             self.minute,
             self.second,
-            self.microseconds,
+            self.microsecond,
         )
