@@ -6,8 +6,8 @@ Attributes:
 """
 
 from datetime import datetime
+import dateutil.parser
 import requests
-from extras import DateTime
 
 
 DEFAULT_API_VERSION = 1
@@ -658,21 +658,19 @@ class Telescope(Device):
         """Set or return the UTC date/time of the telescope's internal clock.
 
         Args:
-            utc_date: UTC date/time.
+            utc_date: UTC date/time as an str or datetime.
         
         Returns:
-            DateTime of the UTC date/time if not set, otherwise JSON response from server.
+            datetime of the UTC date/time if not set, otherwise JSON response from server.
         
         """
         if utc_date == None:
-            return DateTime(self._get("utcdate"))
+            return dateutil.parser.parse(self._get("utcdate"))
         else:
             if type(utc_date) is str:
                 data = utc_date
             elif type(utc_date) is datetime:
-                data = utc_date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-            elif type(utc_date) is DateTime:
-                data = utc_date.__str__()
+                data = utc_date.isoformat()
             else:
                 raise TypeError()
 
