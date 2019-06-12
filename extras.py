@@ -48,7 +48,7 @@ class DateTime:
 
     def __str__(self):
         """Get an ISO compliant string from this DateTime object."""
-        return "%04d-%02d-%02dT%02d:%02d:%02d.%07dZ" % (
+        return "%d-%02d-%02dT%02d:%02d:%02d.%dZ" % (
             self.year,
             self.month,
             self.day,
