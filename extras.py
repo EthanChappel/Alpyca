@@ -26,7 +26,7 @@ class DateTime:
         
         """
         match = re.match(
-            r"(\d.*)-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})[.](\d{1,7})Z", iso_str
+            r"(\d.*)-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})[.](\d{1,7})Z?", iso_str
         )
 
         self.year = int(match.group(1))
