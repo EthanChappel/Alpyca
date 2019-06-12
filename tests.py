@@ -13,6 +13,10 @@ class TestDateTime:
         """Object for TestDateTime class."""
         return DateTime("2016-03-04T17:45:31.1234567Z")
 
+    def test_three_digit_microsecond_no_timezone(self):
+        """Test initialization with three digit microseconds and no timezone."""
+        assert DateTime("2019-06-12T06:12:52.452")
+
     def test_year(self, date_time):
         """Test year attribute in DateTime fixture."""
         assert date_time.year == 2016
