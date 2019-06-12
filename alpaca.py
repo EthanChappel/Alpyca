@@ -60,7 +60,7 @@ class Device:
             *args: List of required parameters or empty if none are required.
 
         """
-        return self._put("action", {"Action": action, "Parameters": args})["Value"]
+        return self._put("action", Action=action, Parameters=args)["Value"]
 
     def commandblind(self, command: str, raw: bool):
         """Transmit an arbitrary string to the device and does not wait for a response.
@@ -72,7 +72,7 @@ class Device:
                 transmission.
 
         """
-        self._put("commandblind", {"Command": command, "Raw": raw})
+        self._put("commandblind", Command=command, Raw=raw)
 
     def commandbool(self, command: str, raw: bool):
         """Transmit an arbitrary string to the device and wait for a boolean response.
@@ -84,7 +84,7 @@ class Device:
                 transmission.
 
         """
-        return self._put("commandbool", {"Command": command, "Raw": raw})["Value"]
+        return self._put("commandbool", Command=command, Raw=raw)["Value"]
 
     def commandstring(self, command: str, raw: bool):
         """Transmit an arbitrary string to the device and wait for a string response.
@@ -96,7 +96,7 @@ class Device:
                 transmission.
 
         """
-        return self._put("commandstring", {"Command": command, "Raw": raw})["Value"]
+        return self._put("commandstring", Command=command, Raw=raw)["Value"]
 
     def connected(self, connected: Optional[bool] = None):
         """Retrieve or set the connected state of the device.
@@ -110,7 +110,7 @@ class Device:
         if connected == None:
             return self._get("connected")
         else:
-            self._put("connected", {"Connected": connected})
+            self._put("connected", Connected=connected)
 
     def description(self) -> str:
         """Get description of the device."""
@@ -136,23 +136,24 @@ class Device:
         """Get list of action names supported by this driver."""
         return self._get("supportedactions")
 
-    def _get(self, attribute: str, data: Optional[Dict[str, Any]] = {}):
+    def _get(self, attribute: str, **data):
         """Send an HTTP GET request to an Alpaca server and check response for errors.
 
         Args:
             attribute (str): Attribute to get from server.
+            **data: Data to send with request.
         
         """
         response = requests.get("%s/%s" % (self.base_url, attribute), data=data)
         self.__check_error(response)
         return response.json()["Value"]
 
-    def _put(self, attribute: str, data: Optional[Dict[str, Any]] = {}):
+    def _put(self, attribute: str, **data):
         """Send an HTTP PUT request to an Alpaca server and check response for errors.
 
         Args:
             attribute (str): Attribute to put to server.
-            data: Data to send with request.
+            **data: Data to send with request.
         
         """
         response = requests.put("%s/%s" % (self.base_url, attribute), data=data)
@@ -404,7 +405,7 @@ class Telescope(Device):
         if declination_rate == None:
             return self._get("declinationrate")
         else:
-            self._put("declinationrate", {"DeclinationRate": declination_rate})
+            self._put("declinationrate", DeclinationRate=declination_rate)
 
     def doesrefraction(self, does_refraction: Optional[bool] = None):
         """Indicate or determine if atmospheric refraction is applied to coordinates.
@@ -421,7 +422,7 @@ class Telescope(Device):
         if does_refraction == None:
             return self._get("doesrefraction")
         else:
-            self._put("doesrefraction", {"DoesRefraction": does_refraction})
+            self._put("doesrefraction", DoesRefraction=does_refraction)
 
     def equatorialsystem(self):
         """Return the current equatorial coordinate system used by this telescope.
@@ -456,7 +457,7 @@ class Telescope(Device):
             return self._get("guideratedeclination")
         else:
             self._put(
-                "guideratedeclination", {"GuideRateDeclination": guide_rate_declination}
+                "guideratedeclination", GuideRateDeclination=guide_rate_declination
             )
 
     def guideraterightascension(
@@ -477,7 +478,7 @@ class Telescope(Device):
         else:
             self._put(
                 "guideraterightascension",
-                {"GuideRateRightAscension": guide_rate_right_ascension},
+                GuideRateRightAscension=guide_rate_right_ascension,
             )
 
     def ispulseguiding(self):
@@ -493,7 +494,9 @@ class Telescope(Device):
         """Return the telescope's right ascension coordinate.
 
         Returns:
-            The right ascension (hours) of the telescope's current equatorial coordinates, in the coordinate system given by the EquatorialSystem property.
+            The right ascension (hours) of the telescope's current equatorial
+            coordinates, in the coordinate system given by the EquatorialSystem
+            property.
 
         """
         return self._get("rightascension")
@@ -512,9 +515,7 @@ class Telescope(Device):
         if right_ascension_rate == None:
             return self._get("rightascensionrate")
         else:
-            self._put(
-                "rightascensionrate", {"RightAscensionRate": right_ascension_rate}
-            )
+            self._put("rightascensionrate", RightAscensionRate=right_ascension_rate)
 
     def sideofpier(self, side_of_pier: Optional[int] = None):
         """Set or return the mount's pointing state.
@@ -529,7 +530,7 @@ class Telescope(Device):
         if side_of_pier == None:
             return self._get("sideofpier")
         else:
-            self._put("sideofpier", {"SideOfPier": side_of_pier})
+            self._put("sideofpier", SideOfPier=side_of_pier)
 
     def siderealtime(self):
         """Return the local apparent sidereal time.
@@ -554,7 +555,7 @@ class Telescope(Device):
         if site_elevation == None:
             return self._get("siteelevation")
         else:
-            self._put("siteelevation", {"SiteElevation": site_elevation})
+            self._put("siteelevation", SiteElevation=site_elevation)
 
     def sitelatitude(self, site_latitude: Optional[float] = None):
         """Set or return the observing site's latitude.
@@ -570,7 +571,7 @@ class Telescope(Device):
         if site_latitude == None:
             return self._get("sitelatitude")
         else:
-            self._put("sitelatitude", {"SiteLatitude": site_latitude})
+            self._put("sitelatitude", SiteLatitude=site_latitude)
 
     def sitelongitude(self, site_longitude: Optional[float] = None):
         """Set or return the observing site's longitude.
@@ -586,7 +587,7 @@ class Telescope(Device):
         if site_longitude == None:
             return self._get("sitelongitude")
         else:
-            self._put("sitelongitude", {"SiteLongitude": site_longitude})
+            self._put("sitelongitude", SiteLongitude=site_longitude)
 
     def slewing(self):
         """Indicate whether the telescope is currently slewing.
@@ -610,7 +611,7 @@ class Telescope(Device):
         if slew_settle_time == None:
             return self._get("slewsettletime")
         else:
-            self._put("slewsettletime", {"SlewSettleTime": slew_settle_time})
+            self._put("slewsettletime", SlewSettleTime=slew_settle_time)
 
     def targetdeclination(self, target_declination: Optional[float] = None):
         """Set or return the target declination of a slew or sync.
@@ -626,7 +627,7 @@ class Telescope(Device):
         if target_declination == None:
             return self._get("targetdeclination")
         else:
-            self._put("targetdeclination", {"TargetDeclination": target_declination})
+            self._put("targetdeclination", TargetDeclination=target_declination)
 
     def targetrightascension(self, target_right_ascension: Optional[float] = None):
         """Set or return the current target right ascension.
@@ -643,7 +644,7 @@ class Telescope(Device):
             return self._get("targetrightascension")
         else:
             self._put(
-                "targetrightascension", {"TargetRightAscension": target_right_ascension}
+                "targetrightascension", TargetRightAscension=target_right_ascension
             )
 
     def tracking(self, tracking: Optional[bool] = None):
@@ -659,7 +660,7 @@ class Telescope(Device):
         if tracking == None:
             return self._get("tracking")
         else:
-            self._put("tracking", {"Tracking": tracking})
+            self._put("tracking", Tracking=tracking)
 
     def trackingrate(self, tracking_rate: Optional[int] = None):
         """Set or return the current tracking rate.
@@ -675,7 +676,7 @@ class Telescope(Device):
         if tracking_rate == None:
             return self._get("trackingrate")
         else:
-            self._put("trackingrate", {"TrackingRate": tracking_rate})
+            self._put("trackingrate", TrackingRate=tracking_rate)
 
     def trackingrates(self):
         """Return a collection of supported DriveRates values.
@@ -706,7 +707,7 @@ class Telescope(Device):
             else:
                 raise TypeError()
 
-            self._put("utcdate", {"UTCDate": data})
+            self._put("utcdate", UTCDate=data)
 
     def abortslew(self):
         """Immediatley stops a slew in progress."""
@@ -719,7 +720,7 @@ class Telescope(Device):
             The rates at which the telescope may be moved about the specified axis by the moveaxis(int, float) method.
         
         """
-        return self._get("axisrates", {"Axis": axis})
+        return self._get("axisrates", Axis=axis)
 
     def canmoveaxis(self, axis: int):
         """Indicate whether the telescope can move the requested axis.
@@ -728,7 +729,7 @@ class Telescope(Device):
             True if this telescope can move the requested axis.
 
         """
-        return self._get("canmoveaxis", {"Axis": axis})
+        return self._get("canmoveaxis", Axis=axis)
 
     def destinationsideofpier(self, right_ascension: float, declination: float):
         """Predicts the pointing state after a German equatorial mount slews to given coordinates.
@@ -744,7 +745,8 @@ class Telescope(Device):
         """
         return self._get(
             "destinationsideofpier",
-            {"RightAscension": right_ascension, "Declination": declination},
+            RightAscension=right_ascension,
+            Declination=declination,
         )
 
     def findhome(self):
@@ -760,7 +762,7 @@ class Telescope(Device):
             rate (float): The rate of motion (deg/sec) about the specified axis
 
         """
-        self._put("moveaxis", {"Axis": axis, "Rate": rate})
+        self._put("moveaxis", Axis=axis, Rate=rate)
 
     def park(self):
         """Park the mount."""
@@ -777,7 +779,7 @@ class Telescope(Device):
             duration (int): Duration of the guide-rate motion (milliseconds).
         
         """
-        self._put("pulseguide", {"Direction": direction, "Duration": duration})
+        self._put("pulseguide", Direction=direction, Duration=duration)
 
     def setpark(self):
         """Set the telescope's park position."""
@@ -792,7 +794,7 @@ class Telescope(Device):
             altitude (float): Altitude coordinate (degrees, positive up).
 
         """
-        self._put("slewtoaltaz", {"Azimuth": azimuth, "Altitude": altitude})
+        self._put("slewtoaltaz", Azimuth=azimuth, Altitude=altitude)
 
     def slewtoaltazasync(self, azimuth: float, altitude: float):
         """Slew asynchronously to the given local horizontal coordinates.
@@ -803,7 +805,7 @@ class Telescope(Device):
             altitude (float): Altitude coordinate (degrees, positive up).
 
         """
-        self._put("slewtoaltazasync", {"Azimuth": azimuth, "Altitude": altitude})
+        self._put("slewtoaltazasync", Azimuth=azimuth, Altitude=altitude)
 
     def slewtocoordinates(self, right_ascension: float, declination: float):
         """Slew synchronously to the given equatorial coordinates.
@@ -814,8 +816,7 @@ class Telescope(Device):
 
         """
         self._put(
-            "slewtocoordinates",
-            {"RightAscension": right_ascension, "Declination": declination},
+            "slewtocoordinates", RightAscension=right_ascension, Declination=declination
         )
 
     def slewtocoordinatesasync(self, right_ascension: float, declination: float):
@@ -828,7 +829,8 @@ class Telescope(Device):
         """
         self._put(
             "slewtocoordinatesasync",
-            {"RightAscension": right_ascension, "Declination": declination},
+            RightAscension=right_ascension,
+            Declination=declination,
         )
 
     def slewtotarget(self):
@@ -848,7 +850,7 @@ class Telescope(Device):
             altitude (float): Altitude coordinate (degrees, positive up).
 
         """
-        self._put("synctoaltaz", {"Azimuth": azimuth, "Altitude": altitude})
+        self._put("synctoaltaz", Azimuth=azimuth, Altitude=altitude)
 
     def synctocoordinates(self, right_ascension: float, declination: float):
         """Sync to the given equatorial coordinates.
@@ -859,8 +861,7 @@ class Telescope(Device):
 
         """
         self._put(
-            "synctocoordinates",
-            {"RightAscension": right_ascension, "Declination": declination},
+            "synctocoordinates", RightAscension=right_ascension, Declination=declination
         )
 
     def synctotarget(self):
