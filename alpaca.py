@@ -229,7 +229,8 @@ class Telescope(Device):
         """Indicate whether the mount is at the home position.
 
         Returns:
-            True if the mount is stopped in the Home position. Must be False if the telescope does not support homing.
+            True if the mount is stopped in the Home position. Must be False if the
+            telescope does not support homing.
         
         """
         return self._get("athome")
@@ -238,7 +239,8 @@ class Telescope(Device):
         """Indicate whether the telescope is at the park position.
 
         Returns:
-            True if the telescope has been put into the parked state by the seee park() method. Set False by calling the unpark() method.
+            True if the telescope has been put into the parked state by the seee park()
+            method. Set False by calling the unpark() method.
         
         """
         return self._get("atpark")
@@ -247,7 +249,8 @@ class Telescope(Device):
         """Return the telescope's aperture.
         
         Return:
-            Azimuth of the telescope's current position (degrees, North-referenced, positive East/clockwise).
+            Azimuth of the telescope's current position (degrees, North-referenced,
+            positive East/clockwise).
 
         """
         return self._get("azimuth")
@@ -274,7 +277,8 @@ class Telescope(Device):
         """Indicate whether the telescope can be pulse guided.
 
         Returns:
-            True if this telescope is capable of software-pulsed guiding (via the pulseguide(int, int) method).
+            True if this telescope is capable of software-pulsed guiding (via the
+            pulseguide(int, int) method).
         
         """
         return self._get("canpulseguide")
@@ -283,7 +287,8 @@ class Telescope(Device):
         """Indicate whether the DeclinationRate property can be changed.
 
         Returns:
-            True if the DeclinationRate property can be changed to provide offset tracking in the declination axis.
+            True if the DeclinationRate property can be changed to provide offset
+            tracking in the declination axis.
 
         """
         return self._get("cansetdeclinationrate")
@@ -292,7 +297,8 @@ class Telescope(Device):
         """Indicate whether the DeclinationRate property can be changed.
 
         Returns:
-            True if the guide rate properties used for pulseguide(int, int) can ba adjusted.
+            True if the guide rate properties used for pulseguide(int, int) can ba
+            adjusted.
 
         """
         return self._get("cansetguiderates")
@@ -301,7 +307,8 @@ class Telescope(Device):
         """Indicate whether the telescope park position can be set.
 
         Returns:
-            True if this telescope is capable of programmed setting of its park position (setpark() method)
+            True if this telescope is capable of programmed setting of its park position
+            (setpark() method).
 
         """
         return self._get("cansetpark")
@@ -310,7 +317,8 @@ class Telescope(Device):
         """Indicate whether the telescope SideOfPier can be set.
 
         Returns:
-            True if the SideOfPier property can be set, meaning that the mount can be forced to flip.
+            True if the SideOfPier property can be set, meaning that the mount can be
+            forced to flip.
         
         """
         return self._get("cansetpierside")
@@ -319,7 +327,8 @@ class Telescope(Device):
         """Indicate whether the RightAscensionRate property can be changed.
 
         Returns:
-            True if the RightAscensionRate property can be changed to provide offset tracking in the right ascension axis.
+            True if the RightAscensionRate property can be changed to provide offset
+            tracking in the right ascension axis.
         
         """
         return self._get("cansetrightascensionrate")
@@ -328,7 +337,8 @@ class Telescope(Device):
         """Indicate whether the Tracking property can be changed.
 
         Returns:
-            True if the Tracking property can be changed, turning telescope sidereal tracking on and off.
+            True if the Tracking property can be changed, turning telescope sidereal
+            tracking on and off.
         
         """
         return self._get("cansettracking")
@@ -337,7 +347,8 @@ class Telescope(Device):
         """Indicate whether the telescope can slew synchronously.
 
         Returns:
-            True if this telescope is capable of programmed slewing (synchronous or asynchronous) to equatorial coordinates.
+            True if this telescope is capable of programmed slewing (synchronous or
+            asynchronous) to equatorial coordinates.
         
         """
         return self._get("canslew")
@@ -346,7 +357,8 @@ class Telescope(Device):
         """Indicate whether the telescope can slew synchronously to AltAz coordinates.
 
         Returns:
-            True if this telescope is capable of programmed slewing (synchronous or asynchronous) to local horizontal coordinates.
+            True if this telescope is capable of programmed slewing (synchronous or
+            asynchronous) to local horizontal coordinates.
 
         """
         return self._get("canslewaltaz")
@@ -355,7 +367,8 @@ class Telescope(Device):
         """Indicate whether the telescope can slew asynchronusly to AltAz coordinates.
 
         Returns:
-            True if this telescope is capable of programmed asynchronus slewing (synchronous or asynchronous) to local horizontal coordinates.
+            True if this telescope is capable of programmed asynchronus slewing
+            (synchronous or asynchronous) to local horizontal coordinates.
 
         """
         return self._get("canslewaltazasync")
@@ -364,7 +377,8 @@ class Telescope(Device):
         """Indicate whether the telescope can sync to equatorial coordinates.
 
         Returns:
-            True if this telescope is capable of programmed synching to equatorial coordinates.
+            True if this telescope is capable of programmed synching to equatorial
+            coordinates.
         
         """
         return self._get("cansync")
@@ -373,7 +387,8 @@ class Telescope(Device):
         """Indicate whether the telescope can sync to local horizontal coordinates.
 
         Returns:
-            True if this telescope is capable of programmed synching to local horizontal coordinates.
+            True if this telescope is capable of programmed synching to local horizontal
+            coordinates.
         
         """
         return self._get("cansyncaltaz")
@@ -428,7 +443,8 @@ class Telescope(Device):
         """Return the current equatorial coordinate system used by this telescope.
 
         Returns:
-            Current equatorial coordinate system used by this telescope (e.g. Topocentric or J2000).
+            Current equatorial coordinate system used by this telescope
+            (e.g. Topocentric or J2000).
 
         """
         return self._get("equatorialsystem")
@@ -536,7 +552,8 @@ class Telescope(Device):
         """Return the local apparent sidereal time.
 
         Returns:
-            The local apparent sidereal time from the telescope's internal clock (hours, sidereal).
+            The local apparent sidereal time from the telescope's internal clock (hours,
+            sidereal).
 
         """
         return self._get("siderealtime")
@@ -593,7 +610,8 @@ class Telescope(Device):
         """Indicate whether the telescope is currently slewing.
 
         Returns:
-            True if telescope is currently moving in response to one of the Slew methods or the moveaxis(int, float) method, False at all other times.
+            True if telescope is currently moving in response to one of the Slew methods
+            or the moveaxis(int, float) method, False at all other times.
 
         """
         return self._get("slewing")
@@ -682,7 +700,8 @@ class Telescope(Device):
         """Return a collection of supported DriveRates values.
 
         Returns:
-            List of supported DriveRates values that describe the permissible values of the TrackingRate property for this telescope type.
+            List of supported DriveRates values that describe the permissible values of
+            the TrackingRate property for this telescope type.
 
         """
         return self._get("trackingrates")
@@ -714,10 +733,11 @@ class Telescope(Device):
         self._put("abortslew")
 
     def axisrates(self, axis: int):
-        """Return the rates at which the telescope may be moved about the specified axis.
+        """Return rates at which the telescope may be moved about the specified axis.
 
         Returns:
-            The rates at which the telescope may be moved about the specified axis by the moveaxis(int, float) method.
+            The rates at which the telescope may be moved about the specified axis by
+            the moveaxis(int, float) method.
         
         """
         return self._get("axisrates", Axis=axis)
@@ -740,7 +760,9 @@ class Telescope(Device):
             declination (float): Declination coordinate (-90.0 to +90.0 degrees).
 
         Returns:
-            Pointing state that a German equatorial mount will be in if it slews to the given coordinates. The return value will be one of - 0 = pierEast, 1 = pierWest, -1 = pierUnknown.
+            Pointing state that a German equatorial mount will be in if it slews to the
+            given coordinates. The return value will be one of - 0 = pierEast,
+            1 = pierWest, -1 = pierUnknown.
 
         """
         return self._get(
