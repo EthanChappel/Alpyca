@@ -176,6 +176,246 @@ class Device:
             raise Exception(response.json()["Value"])
 
 
+class Dome(Device):
+    """Dome specific methods."""
+
+    def __init__(
+        self,
+        address: str,
+        device_number: int,
+        protocall: str = "http",
+        api_version: int = DEFAULT_API_VERSION,
+    ):
+        """Initialize Dome object."""
+        super().__init__(address, "dome", device_number, protocall, api_version)
+
+    def altitude(self) -> float:
+        """Dome altitude.
+
+        Returns:
+            Dome altitude (degrees, horizon zero and increasing positive to 90 zenith).
+        
+        """
+        return self._get("altitude")
+
+    def athome(self) -> bool:
+        """Indicate whether the dome is in the home position.
+
+        Notes:
+            This is normally used following a findhome() operation. The value is reset
+            with any azimuth slew operation that moves the dome away from the home
+            position. athome() may also become true durng normal slew operations, if the
+            dome passes through the home position and the dome controller hardware is
+            capable of detecting that; or at the end of a slew operation if the dome
+            comes to rest at the home position.
+
+        Returns:
+            True if dome is in the home position.
+        
+        """
+        return self._get("athome")
+
+    def atpark(self) -> bool:
+        """Indicate whether the telescope is at the park position.
+
+        Notes:
+            Set only following a park() operation and reset with any slew operation.
+
+        Returns:
+            True if the dome is in the programmed park position.
+
+        """
+        return self._get("atpark")
+
+    def azimuth(self) -> float:
+        """Dome azimuth.
+
+        Returns:
+            Dome azimuth (degrees, North zero and increasing clockwise, i.e., 90 East,
+            180 South, 270 West).
+
+        """
+        return self._get("azimuth")
+
+    def canfindhome(self) -> bool:
+        """Indicate whether the dome can find the home position.
+
+        Returns:
+            True if the dome can move to the home position.
+        
+        """
+        return self._get("canfindhome")
+
+    def canpark(self) -> bool:
+        """Indicate whether the dome can be parked.
+
+        Returns:
+            True if the dome is capable of programmed parking (park() method).
+        
+        """
+        return self._get("canpark")
+
+    def cansetaltitude(self) -> bool:
+        """Indicate whether the dome altitude can be set.
+
+        Returns:
+            True if driver is capable of setting the dome altitude.
+        
+        """
+        return self._get("cansetaltitude")
+
+    def cansetazimuth(self) -> bool:
+        """Indicate whether the dome azimuth can be set.
+
+        Returns:
+            True if driver is capable of setting the dome azimuth.
+        
+        """
+        return self._get("cansetazimuth")
+
+    def cansetpark(self) -> bool:
+        """Indicate whether the dome park position can be set.
+
+        Returns:
+            True if driver is capable of setting the dome park position.
+        
+        """
+        return self._get("cansetpark")
+
+    def cansetshutter(self) -> bool:
+        """Indicate whether the dome shutter can be opened.
+
+        Returns:
+            True if driver is capable of automatically operating shutter.
+
+        """
+        return self._get("cansetshutter")
+
+    def canslave(self) -> bool:
+        """Indicate whether the dome supports slaving to a telescope.
+
+        Returns:
+            True if driver is capable of slaving to a telescope.
+        
+        """
+        return self._get("canslave")
+
+    def cansyncazimuth(self) -> bool:
+        """Indicate whether the dome azimuth position can be synched.
+
+        Notes:
+            True if driver is capable of synchronizing the dome azimuth position using
+            the synctoazimuth(float) method.
+        
+        Returns:
+            True or False value.
+        
+        """
+        return self._get("cansyncazimuth")
+
+    def shutterstatus(self) -> int:
+        """Status of the dome shutter or roll-off roof.
+
+        Notes:
+            0 = Open, 1 = Closed, 2 = Opening, 3 = Closing, 4 = Shutter status error.
+        
+        Returns:
+            Status of the dome shutter or roll-off roof.
+
+        """
+        return self._get("shutterstatus")
+
+    def slaved(self, slaved: Optional[bool] = None) -> bool:
+        """Set or indicate whether the dome is slaved to the telescope.
+        
+        Returns:
+            True or False value in not set.
+        
+        """
+        if slaved == None:
+            return self._get("slaved")
+        else:
+            self._put("slaved", Slaved=slaved)
+
+    def slewing(self) -> bool:
+        """Indicate whether the any part of the dome is moving.
+
+        Notes:
+            True if any part of the dome is currently moving, False if all dome
+            components are steady.
+        
+        Return:
+            True or False value.
+        
+        """
+        return self._get("slewing")
+
+    def abortslew(self):
+        """Immediately cancel current dome operation.
+
+        Notes:
+            Calling this method will immediately disable hardware slewing (Slaved will
+            become False).
+
+        """
+        self._put("abortslew")
+
+    def closeshutter(self):
+        """Close the shutter or otherwise shield telescope from the sky."""
+        self._put("closeshutter")
+
+    def findhome(self):
+        """Start operation to search for the dome home position.
+
+        Notes:
+            After home position is established initializes azimuth to the default value
+            and sets the athome flag.
+        
+        """
+        self._put("findhome")
+
+    def openshutter(self):
+        """Open shutter or otherwise expose telescope to the sky."""
+        self._put("openshutter")
+
+    def park(self):
+        """Rotate dome in azimuth to park position.
+
+        Notes:
+            After assuming programmed park position, sets atpark flag.
+        
+        """
+        self._put("park")
+
+    def setpark(self):
+        """Set current azimuth, altitude position of dome to be the park position."""
+        self._put("setpark")
+
+    def slewtoaltitude(self, altitude: float):
+        """Slew the dome to the given altitude position."""
+        self._put("slewtoaltitude", Altitude=altitude)
+
+    def slewtoazimuth(self, azimuth: float):
+        """Slew the dome to the given azimuth position.
+        
+        Args:
+            azimuth (float): Target dome azimuth (degrees, North zero and increasing
+                clockwise. i.e., 90 East, 180 South, 270 West).
+
+        """
+        self._put("slewtoazimuth", Azimuth=azimuth)
+
+    def synctoazimuth(self, azimuth: float):
+        """Synchronize the current position of the dome to the given azimuth.
+
+        Args:
+            azimuth (float): Target dome azimuth (degrees, North zero and increasing
+                clockwise. i.e., 90 East, 180 South, 270 West).
+        
+        """
+        self._put("synctoazimuth", Azimuth=azimuth)
+
+
 class Telescope(Device):
     """Telescope specific methods."""
 
