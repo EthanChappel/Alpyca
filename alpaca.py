@@ -441,6 +441,53 @@ class Dome(Device):
         self._put("synctoazimuth", Azimuth=azimuth)
 
 
+class FilterWheel(Device):
+    """Filter wheel specific methods."""
+
+    def __init__(
+        self,
+        address: str,
+        device_number: int,
+        protocall: str = "http",
+        api_version: int = DEFAULT_API_VERSION,
+    ):
+        """Initialize FilterWheel object."""
+        super().__init__(address, "filterwheel", device_number, protocall, api_version)
+
+    def focusoffsets(self) -> List[int]:
+        """Filter focus offsets.
+
+        Returns:
+            An integer array of filter focus offsets.
+        
+        """
+        return self._get("focusoffsets")
+
+    def names(self) -> List[str]:
+        """Filter wheel filter names.
+
+        Returns:
+            Names of the filters.
+
+        """
+        return self._get("names")
+
+    def position(self, position: Optional[int] = None):
+        """Set or return the filter wheel position.
+
+        Args:
+            position (int): Number of the filter wheel position to select.
+
+        Returns:
+            Returns the current filter wheel position.
+        
+        """
+        if position == None:
+            return self._get("position")
+        else:
+            self._put("position", Position=position)
+
+
 class Telescope(Device):
     """Telescope specific methods."""
 
