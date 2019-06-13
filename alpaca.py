@@ -176,6 +176,31 @@ class Device:
             raise Exception(response.json()["Value"])
 
 
+class SafetyMonitor(Device):
+    """Safety monitor specific methods."""
+
+    def __init__(
+        self,
+        address: str,
+        device_number: int,
+        protocall: str = "http",
+        api_version: int = DEFAULT_API_VERSION,
+    ):
+        """Initialize SafetyMonitor object."""
+        super().__init__(
+            address, "safetymonitor", device_number, protocall, api_version
+        )
+
+    def issafe(self) -> bool:
+        """Indicate whether the monitored state is safe for use.
+
+        Returns:
+            True if the state is safe, False if it is unsafe.
+        
+        """
+        return self._get("issafe")
+
+
 class Dome(Device):
     """Dome specific methods."""
 
