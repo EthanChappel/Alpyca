@@ -176,6 +176,179 @@ class Device:
             raise Exception(response.json()["Value"])
 
 
+class Switch(Device):
+    """Switch specific methods."""
+
+    def __init__(
+        self,
+        address: str,
+        device_number: int,
+        protocall: str = "http",
+        api_version: int = DEFAULT_API_VERSION,
+    ):
+        """Initialize Switch object."""
+        super().__init__(address, "switch", device_number, protocall, api_version)
+
+    def maxswitch(self) -> int:
+        """Count of switch devices managed by this driver.
+
+        Returns:
+            Number of switch devices managed by this driver. Devices are numbered from 0
+            to MaxSwitch - 1.
+        
+        """
+        return self._get("maxswitch")
+
+    def canwrite(self, Id: Optional[int] = 0) -> bool:
+        """Indicate whether the specified switch device can be written to.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+
+        Returns:
+            Whether the specified switch device can be written to, default true. This is
+            false if the device cannot be written to, for example a limit switch or a
+            sensor.
+        
+        """
+        return self._get("canwrite", Id=Id)
+
+    def getswitch(self, Id: Optional[int] = 0) -> bool:
+        """Return the state of switch device id as a boolean.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+        
+        Returns:
+            State of switch device id as a boolean.
+        
+        """
+        return self._get("getswitch", Id=Id)
+
+    def getswitchdescription(self, Id: Optional[int] = 0) -> str:
+        """Get the description of the specified switch device.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+        
+        Returns:
+            Description of the specified switch device.
+        
+        """
+        return self._get("getswitchdescription", Id=Id)
+
+    def getswitchname(self, Id: Optional[int] = 0) -> str:
+        """Get the name of the specified switch device.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+        
+        Returns:
+            Name of the specified switch device.
+        
+        """
+        return self._get("getswitchname", Id=Id)
+
+    def getswitchvalue(self, Id: Optional[int] = 0) -> str:
+        """Get the value of the specified switch device as a double.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+        
+        Returns:
+            Value of the specified switch device.
+        
+        """
+        return self._get("getswitchvalue", Id=Id)
+
+    def minswitchvalue(self, Id: Optional[int] = 0) -> str:
+        """Get the minimum value of the specified switch device as a double.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+        
+        Returns:
+            Minimum value of the specified switch device as a double.
+        
+        """
+        return self._get("minswitchvalue", Id=Id)
+
+    def setswitch(self, Id: int, State: bool):
+        """Set a switch controller device to the specified state, True or False.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+            State (bool): The required control state (True or False).
+
+        """
+        self._put("setswitch", Id=Id, State=State)
+
+    def setswitchname(self, Id: int, Name: str):
+        """Set a switch device name to the specified value.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+            Name (str): The name of the device.
+
+        """
+        self._put("setswitchname", Id=Id, Name=Name)
+
+    def setswitchvalue(self, Id: int, Value: float):
+        """Set a switch device value to the specified value.
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+            Value (float): Value to be set, between MinSwitchValue and MaxSwitchValue.
+
+        """
+        self._put("setswitchvalue", Id=Id, Value=Value)
+
+    def switchstep(self, Id: Optional[int] = 0) -> str:
+        """Return the step size that this device supports.
+
+        Return the step size that this device supports (the difference between
+        successive values of the device).
+
+        Notes:
+            Devices are numbered from 0 to MaxSwitch - 1.
+
+        Args:
+            Id (int): The device number.
+        
+        Returns:
+            Maximum value of the specified switch device as a double.
+        
+        """
+        return self._get("switchstep", Id=Id)
+
+
 class SafetyMonitor(Device):
     """Safety monitor specific methods."""
 
@@ -739,7 +912,7 @@ class Telescope(Device):
 
         Args:
             DoesRefraction (bool): Set True to make the telescope or driver apply
-            atmospheric refraction to coordinates.
+                atmospheric refraction to coordinates.
         
         Returns:   
             True if the telescope or driver applies atmospheric refraction to
