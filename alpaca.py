@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Optional, Union, List, Dict, Mapping, Any
 import dateutil.parser
 import requests
+from exceptions import NumericError, ErrorMessage
 
 
 DEFAULT_API_VERSION = 1
@@ -166,13 +167,11 @@ class Device:
             response (Response): Response from Alpaca server to check.
 
         """
-        if response.json()["ErrorNumber"] != 0:
-            raise Exception(
-                "Error %d: %s"
-                % (response.json()["ErrorNumber"], response.json()["ErrorMessage"])
-            )
+        j = response.json()
+        if j["ErrorNumber"] != 0:
+            raise NumericError(j["ErrorNumber"], j["ErrorMessage"])
         elif response.status_code == 400 or response.status_code == 500:
-            raise Exception(response.json()["Value"])
+            raise ErrorMessage(j["Value"])
 
 
 class Switch(Device):
