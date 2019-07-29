@@ -614,6 +614,456 @@ class Dome(Device):
         self._put("synctoazimuth", Azimuth=Azimuth)
 
 
+class Camera(Device):
+    """Camera specific methods."""
+
+    def __init__(
+        self,
+        address: str,
+        device_number: int,
+        protocall: str = "http",
+        api_version: int = DEFAULT_API_VERSION,
+    ):
+        """Initialize Camera object."""
+        super().__init__(address, "camera", device_number, protocall, api_version)
+
+    def bayeroffsetx(self) -> int:
+        """Return the X offset of the Bayer matrix, as defined in SensorType."""
+        return self._get("bayeroffsetx")
+
+    def bayeroffsety(self) -> int:
+        """Return the Y offset of the Bayer matrix, as defined in SensorType."""
+        return self._get("bayeroffsety")
+
+    def binx(self, BinX: Optional[int] = None) -> int:
+        """Set or return the binning factor for the X axis.
+
+        Args:
+            BinX (int): The X binning value.
+        
+        Returns:
+            Binning factor for the X axis.
+        
+        """
+        if BinX == None:
+            return self._get("binx")
+        self._put("binx", BinX=BinX)
+
+    def biny(self, BinY: Optional[int] = None) -> int:
+        """Set or return the binning factor for the Y axis.
+
+        Args:
+            BinY (int): The Y binning value.
+        
+        Returns:
+            Binning factor for the Y axis.
+        
+        """
+        if BinY == None:
+            return self._get("biny")
+        self._put("biny", BinY=BinY)
+
+    def camerastate(self) -> int:
+        """Return the camera operational state.
+
+        Notes:
+            0 = CameraIdle, 1 = CameraWaiting, 2 = CameraExposing,
+            3 = CameraReading, 4 = CameraDownload, 5 = CameraError.
+        
+        Returns:
+            Current camera operational state as an integer.
+        
+        """
+        return self._get("camerastate")
+
+    def cameraxsize(self) -> int:
+        """Return the width of the CCD camera chip."""
+        return self._get("cameraxsize")
+
+    def cameraysize(self) -> int:
+        """Return the height of the CCD camera chip."""
+        return self._get("cameraysize")
+
+    def canabortexposure(self) -> bool:
+        """Indicate whether the camera can abort exposures."""
+        return self._get("canabortexposure")
+
+    def canasymmetricbin(self) -> bool:
+        """Indicate whether the camera supports asymmetric binning."""
+        return self._get("canasymmetricbin")
+
+    def canfastreadout(self) -> bool:
+        """Indicate whether the camera has a fast readout mode."""
+        return self._get("canfastreadout")
+
+    def cangetcoolerpower(self) -> bool:
+        """Indicate whether the camera's cooler power setting can be read."""
+        return self._get("cangetcoolerpower")
+
+    def canpulseguide(self) -> bool:
+        """Indicate whether this camera supports pulse guiding."""
+        return self._get("canpulseguide")
+
+    def cansetccdtemperature(self) -> bool:
+        """Indicate whether this camera supports setting the CCD temperature."""
+        return self._get("cansetccdtemperature")
+
+    def canstopexposure(self) -> bool:
+        """Indicate whether this camera can stop an exposure that is in progress."""
+        return self._get("canstopexposure")
+
+    def ccdtemperature(self) -> float:
+        """Return the current CCD temperature in degrees Celsius."""
+        return self._get("ccdtemperature")
+
+    def cooleron(self, CoolerOn: Optional[bool] = None) -> bool:
+        """Turn the camera cooler on and off or return the current cooler on/off state.
+
+        Notes:
+            True = cooler on, False = cooler off.
+
+        Args:
+            CoolerOn (bool): Cooler state.
+        
+        Returns:
+            Current cooler on/off state.
+        
+        """
+        if CoolerOn == None:
+            return self._get("cooleron")
+        self._put("cooleron", CoolerOn=CoolerOn)
+
+    def coolerpower(self) -> float:
+        """Return the present cooler power level, in percent."""
+        return self._get("coolerpower")
+
+    def electronsperadu(self) -> float:
+        """Return the gain of the camera in photoelectrons per A/D unit."""
+        return self._get("electronsperadu")
+
+    def exposuremax(self) -> float:
+        """Return the maximum exposure time supported by StartExposure."""
+        return self._get("exposuremax")
+
+    def exposuremin(self) -> float:
+        """Return the minimum exposure time supported by StartExposure."""
+        return self._get("exposuremin")
+
+    def exposureresolution(self) -> float:
+        """Return the smallest increment in exposure time supported by StartExposure."""
+        return self._get("exposureresolution")
+
+    def fastreadout(self, FastReadout: Optional[bool] = None) -> bool:
+        """Set or return whether Fast Readout Mode is enabled.
+
+        Args:
+            FastReadout (bool): True to enable fast readout mode.
+        
+        Returns:
+            Whether Fast Readout Mode is enabled.
+
+        """
+        if FastReadout == None:
+            return self._get("fastreadout")
+        self._put("fastreadout", FastReadout=FastReadout)
+
+    def fullwellcapacity(self) -> float:
+        """Report the full well capacity of the camera.
+
+        Report the full well capacity of the camera in electrons, at the current
+        camera settings (binning, SetupDialog settings, etc.).
+
+        Returns:
+            Full well capacity of the camera.
+
+        """
+        return self._get("fullwellcapacity")
+
+    def gain(self, Gain: Optional[int] = None) -> int:
+        """Set or return an index into the Gains array.
+
+        Args:
+            Gain (int): Index of the current camera gain in the Gains string array.
+        
+        Returns:
+            Index into the Gains array for the selected camera gain.
+        
+        """
+        if Gain == None:
+            return self._get("gain")
+        self._put("gain", Gain=Gain)
+
+    def gainmax(self) -> int:
+        """Maximum value of Gain."""
+        return self._get("gainmax")
+
+    def gainmin(self) -> int:
+        """Minimum value of Gain."""
+        return self._get("gainmin")
+
+    def gains(self) -> List[int]:
+        """Gains supported by the camera."""
+        return self._get("gains")
+
+    def hasshutter(self) -> bool:
+        """Indicate whether the camera has a mechanical shutter."""
+        return self._get("hasshutter")
+
+    def heatsinktemperature(self) -> float:
+        """Return the current heat sink temperature.
+
+        Returns:
+            Current heat sink temperature (called "ambient temperature" by some
+            manufacturers) in degrees Celsius.
+
+        """
+        return self._get("heatsinktemperature")
+
+    def imagearray(self) -> List[int]:
+        r"""Return an array of integers containing the exposure pixel values.
+
+        Return an array of 32bit integers containing the pixel values from the last
+        exposure. This call can return either a 2 dimension (monochrome images) or 3
+        dimension (colour or multi-plane images) array of size NumX * NumY or NumX *
+        NumY * NumPlanes. Where applicable, the size of NumPlanes has to be determined
+        by inspection of the returned Array. Since 32bit integers are always returned
+        by this call, the returned JSON Type value (0 = Unknown, 1 = short(16bit),
+        2 = int(32bit), 3 = Double) is always 2. The number of planes is given in the
+        returned Rank value. When de-serialising to an object it helps enormously to
+        know the array Rank beforehand so that the correct data class can be used. This
+        can be achieved through a regular expression or by direct parsing of the
+        returned JSON string to extract the Type and Rank values before de-serialising.
+        This regular expression accomplishes the extraction into two named groups Type
+        and Rank ^*"Type":(?<Type>\d*),"Rank":(?<Rank>\d*) which can then be used to
+        select the correct de-serialisation data class.
+
+        Returns:
+            Array of integers containing the exposure pixel values.
+        
+        """
+        return self._get("imagearray")
+
+    def imagearrayvariant(self) -> List[int]:
+        r"""Return an array of integers containing the exposure pixel values.
+
+        Return an array of 32bit integers containing the pixel values from the last
+        exposure. This call can return either a 2 dimension (monochrome images) or 3
+        dimension (colour or multi-plane images) array of size NumX * NumY or NumX *
+        NumY * NumPlanes. Where applicable, the size of NumPlanes has to be determined
+        by inspection of the returned Array. Since 32bit integers are always returned
+        by this call, the returned JSON Type value (0 = Unknown, 1 = short(16bit),
+        2 = int(32bit), 3 = Double) is always 2. The number of planes is given in the
+        returned Rank value. When de-serialising to an object it helps enormously to
+        know the array Rank beforehand so that the correct data class can be used. This
+        can be achieved through a regular expression or by direct parsing of the
+        returned JSON string to extract the Type and Rank values before de-serialising.
+        This regular expression accomplishes the extraction into two named groups Type
+        and Rank ^*"Type":(?<Type>\d*),"Rank":(?<Rank>\d*) which can then be used to
+        select the correct de-serialisation data class.
+
+        Returns:
+            Array of integers containing the exposure pixel values.
+        
+        """
+        return self._get("imagearrayvariant")
+
+    def imageready(self) -> bool:
+        """Indicate that an image is ready to be downloaded."""
+        return self._get("imageready")
+
+    def ispulseguiding(self) -> bool:
+        """Indicatee that the camera is pulse guideing."""
+        return self._get("ispulseguiding")
+
+    def lastexposureduration(self) -> float:
+        """Report the actual exposure duration in seconds (i.e. shutter open time)."""
+        return self._get("lastexposureduration")
+
+    def lastexposurestarttime(self) -> str:
+        """Start time of the last exposure in FITS standard format.
+        
+        Reports the actual exposure start in the FITS-standard
+        CCYY-MM-DDThh:mm:ss[.sss...] format.
+
+        Returns:
+            Start time of the last exposure in FITS standard format.
+
+        """
+        return self._get("lastexposurestarttime")
+
+    def maxadu(self) -> int:
+        """Camera's maximum ADU value."""
+        return self._get("maxadu")
+
+    def maxbinx(self) -> int:
+        """Maximum binning for the camera X axis."""
+        return self._get("maxbinx")
+
+    def maxbiny(self) -> int:
+        """Maximum binning for the camera Y axis."""
+        return self._get("maxbiny")
+
+    def numx(self, NumX: Optional[int] = None) -> int:
+        """Set or return the current subframe width.
+        
+        Args:
+            NumX (int): Subframe width, if binning is active, value is in binned
+                pixels.
+        
+        Returns:
+            Current subframe width.
+        
+        """
+        if NumX == None:
+            return self._get("numx")
+        self._put("numx", NumX=NumX)
+
+    def numy(self, NumY: Optional[int] = None) -> int:
+        """Set or return the current subframe height.
+        
+        Args:
+            NumX (int): Subframe height, if binning is active, value is in binned
+                pixels.
+        
+        Returns:
+            Current subframe height.
+        
+        """
+        if NumY == None:
+            return self._get("numy")
+        self._put("numy", NumY=NumY)
+
+    def percentcompleted(self) -> int:
+        """Indicate percentage completeness of the current operation.
+
+        Returns:
+            If valid, returns an integer between 0 and 100, where 0 indicates 0%
+            progress (function just started) and 100 indicates 100% progress (i.e.
+            completion).
+        
+        """
+        return self._get("percentcompleted")
+
+    def pixelsizex(self):
+        """Width of CCD chip pixels (microns)."""
+        return self._get("pixelsizex")
+
+    def pixelsizey(self):
+        """Height of CCD chip pixels (microns)."""
+        return self._get("pixelsizey")
+
+    def readoutmode(self, ReadoutMode: Optional[int] = None) -> int:
+        """Indicate the canera's readout mode as an index into the array ReadoutModes."""
+        if ReadoutMode == None:
+            return self._get("readoutmode")
+        self._put("readoutmode", ReadoutMode=ReadoutMode)
+
+    def readoutmodes(self) -> List[int]:
+        """List of available readout modes."""
+        return self._get("readoutmodes")
+
+    def sensorname(self) -> str:
+        """Name of the sensor used within the camera."""
+        return self._get("sensorname")
+
+    def sensortype(self) -> int:
+        """Type of information returned by the the camera sensor (monochrome or colour).
+        
+        Notes:
+            0 = Monochrome, 1 = Colour not requiring Bayer decoding, 2 = RGGB Bayer
+            encoding, 3 = CMYG Bayer encoding, 4 = CMYG2 Bayer encoding, 5 = LRGB
+            TRUESENSE Bayer encoding.
+            
+        Returns:
+            Value indicating whether the sensor is monochrome, or what Bayer matrix it
+            encodes.
+        
+        """
+        return self._get("sensortype")
+
+    def setccdtemperature(self, SetCCDTemperature: Optional[float] = None) -> float:
+        """Set or return the camera's cooler setpoint (degrees Celsius).
+
+        Args:
+            SetCCDTemperature (float): 	Temperature set point (degrees Celsius).
+        
+        Returns:
+            Camera's cooler setpoint (degrees Celsius).
+        
+        """
+        if SetCCDTemperature == None:
+            return self._get("setccdtemperature")
+        self._put("setccdtemperature", SetCCDTemperature=SetCCDTemperature)
+
+    def startx(self, StartX: Optional[int] = None) -> int:
+        """Set or return the current subframe X axis start position.
+
+        Args:
+            StartX (int): The subframe X axis start position in binned pixels.
+        
+        Returns:
+            Sets the subframe start position for the X axis (0 based) and returns the
+            current value. If binning is active, value is in binned pixels.
+        
+        """
+        if StartX == None:
+            return self._get("startx")
+        self._put("startx", StartX=StartX)
+
+    def starty(self, StartY: Optional[int] = None) -> int:
+        """Set or return the current subframe Y axis start position.
+
+        Args:
+            StartY (int): The subframe Y axis start position in binned pixels.
+        
+        Returns:
+            Sets the subframe start position for the Y axis (0 based) and returns the
+            current value. If binning is active, value is in binned pixels.
+        
+        """
+        if StartY == None:
+            return self._get("starty")
+        self._put("starty", StartY=StartY)
+
+    def abortexposure(self):
+        """Abort the current exposure, if any, and returns the camera to Idle state."""
+        self._put("abortexposure")
+
+    def pulseguide(self, Direction: int, Duration: int):
+        """Pulse guide in the specified direction for the specified time.
+        
+        Args:
+            Direction (int): Direction of movement (0 = North, 1 = South, 2 = East,
+                3 = West).
+            Duration (int): Duration of movement in milli-seconds.
+        
+        """
+        self._put("pulseguide", Direction=Direction, Duration=Duration)
+
+    def startexposure(self, Duration: float, Light: bool):
+        """Start an exposure.
+        
+        Notes:
+            Use ImageReady to check when the exposure is complete.
+        
+        Args:
+            Duration (float): Duration of exposure in seconds.
+            Light (bool): True if light frame, false if dark frame.
+
+        """
+        self._put("startexposure", Duration=Duration, Light=Light)
+
+    def stopexposure(self):
+        """Stop the current exposure, if any.
+        
+        Notes:
+            If an exposure is in progress, the readout process is initiated. Ignored if
+            readout is already in process.
+        
+        """
+        self._put("stopexposure")
+
+
 class FilterWheel(Device):
     """Filter wheel specific methods."""
 
