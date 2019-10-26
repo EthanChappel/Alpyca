@@ -7,6 +7,7 @@ setuptools.setup(
     author="Ethan Chappel",
     url="https://github.com/EthanChappel/Alpyca",
     version="1.0.0b0",
+    license="LICENSE.txt",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
