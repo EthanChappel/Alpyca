@@ -14,5 +14,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Intended Audience :: Developers",
         "Topic :: Scientific/Engineering :: Astronomy",
+        "License :: OSI Approved :: Apache Software License",
     ],
 )
