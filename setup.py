@@ -8,7 +8,8 @@ setuptools.setup(
     url="https://github.com/EthanChappel/Alpyca",
     version="1.0.0b0",
     license="LICENSE.txt",
-    packages=setuptools.find_packages(),
+    py_modules=["alpaca"],
+    install_requires=["requests"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Development Status :: 4 - Beta",
