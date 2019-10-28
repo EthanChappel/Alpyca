@@ -1,9 +1,14 @@
 """Setup Alpyca for distribution."""
 import setuptools
 
+with open("README.md", "r") as f:
+    long_description = f.read()
+
 setuptools.setup(
     name="Alpyca",
     description="Python interface for ASCOM Alpaca.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Ethan Chappel",
     url="https://github.com/EthanChappel/Alpyca",
     version="1.0.0b0",
