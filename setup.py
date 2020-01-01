@@ -11,10 +11,10 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     author="Ethan Chappel",
     url="https://github.com/EthanChappel/Alpyca",
-    version="1.0.0b0",
+    version="1.0.0b1",
     license="LICENSE.txt",
     py_modules=["alpaca"],
-    install_requires=["requests"],
+    install_requires=["requests", "python-dateutil"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Development Status :: 4 - Beta",
