@@ -1,6 +1,8 @@
 # Alpyca
 Python interface for [ASCOM Alpaca](https://ascom-standards.org/Developer/Alpaca.htm)
 
+**This project is now maintained by the ASCOM Initiative and can be found here: https://github.com/ASCOMInitiative/alpyca/**
+
 
 
 ## Install
